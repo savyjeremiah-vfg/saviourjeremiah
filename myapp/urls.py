@@ -13,16 +13,20 @@ urlpatterns = [
     path('volunteer/', views.volunteer, name='volunteer'),
     path('contact/', views.contact, name='contact'),
     path('image/', views.image, name='image'),
-    # path('tem/', views.tem, name='tem'),
-    path('MEDIA/', views.MEDIA, name='MEDIA'),
+
+    # FIXED — correct function name
+    path('Media/', views.Media, name='Media'),
+
     path('testimony_success/', views.testimony_success, name='testimony_success'),
     path('testimonies/', views.testimony_page, name='testimony_page'),
-    path("nav", views.nav, name="nav"),
-    path("styles", views.styles, name="styles"),
-    # path('delete/<int:id>/', views.delete_testimony, name='delete_testimony'),
+
+    path("nav/", views.nav, name="nav"),
+    path("styles/", views.styles, name="styles"),
+
+    # delete testimony
+    path('delete/<int:id>/', views.delete_testimony, name='delete_testimony'),
 ]
 
-# Serve media files in development
+# Serve media files in debug mode
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
