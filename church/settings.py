@@ -3,8 +3,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-7p6crnh+8^mc1+&)qv)6q()#pnffejfb6kiroa_!nw!8e2k9bo'
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False   # ❗ Set to False for production
+ALLOWED_HOSTS = ["*"]  # Add your domain or server IP here later
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -13,11 +13,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp',  # <- Added your app here
+
+    # Your app
+    'myapp',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    # ----------------------------
+    # WHITENOISE MIDDLEWARE (MUST be right after SecurityMiddleware)
+    # ----------------------------
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -45,6 +53,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'church.wsgi.application'
 
+# ----------------------------
+# DATABASE (SQLite default)
+# ----------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -52,6 +63,9 @@ DATABASES = {
     }
 }
 
+# ----------------------------
+# PASSWORD VALIDATION
+# ----------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
@@ -63,5 +77,16 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = 'static/'
+
+# ----------------------------
+# STATIC FILES + WHITENOISE
+# ----------------------------
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Enable Whitenoise compression and caching
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
