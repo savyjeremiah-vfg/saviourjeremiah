@@ -1,12 +1,20 @@
 from pathlib import Path
 
+# ----------------------------
+# BASE DIRECTORY
+# ----------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ----------------------------
+# SECURITY
+# ----------------------------
 SECRET_KEY = 'django-insecure-7p6crnh+8^mc1+&)qv)6q()#pnffejfb6kiroa_!nw!8e2k9bo'
+DEBUG = False  # Set to True for development
+ALLOWED_HOSTS = ["*"]  # Add your domain or server IP for production
 
-DEBUG = False   # Set to True for development
-ALLOWED_HOSTS = ["*"]   # Add your server IP / domain for production
-
+# ----------------------------
+# INSTALLED APPS
+# ----------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -15,14 +23,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'myapp',  # your app
+    'myapp',  # Your app
 ]
 
+# ----------------------------
+# MIDDLEWARE
+# ----------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
     # ----------------------------
-    # WHITENOISE (must be here)
+    # WHITENOISE (must be right after SecurityMiddleware)
     # ----------------------------
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
@@ -34,12 +45,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# ----------------------------
+# URL CONFIGURATION
+# ----------------------------
 ROOT_URLCONF = 'church.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],  # Add custom template dirs here
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -55,7 +69,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'church.wsgi.application'
 
 # ----------------------------
-# DATABASE (SQLite)
+# DATABASE (SQLite default)
 # ----------------------------
 DATABASES = {
     'default': {
@@ -74,6 +88,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# ----------------------------
+# INTERNATIONALIZATION
+# ----------------------------
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -83,19 +100,22 @@ USE_TZ = True
 # STATIC FILES (CSS, JS, Images)
 # ----------------------------
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"   # where collectstatic stores files
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Where collectstatic stores files
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Additional static files inside your project
+# Additional static files directory
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "static",  # Make sure this folder exists
 ]
 
 # ----------------------------
 # MEDIA FILES (uploaded images)
 # ----------------------------
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'  # Make sure this folder exists
 
+# ----------------------------
+# DEFAULT AUTO FIELD
+# ----------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
